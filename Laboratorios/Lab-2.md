@@ -64,7 +64,7 @@ El circuito se divide en dos secciones: Red de Potencia (AC) y Red de Control (D
 
 <div align="center">
  
-![]()
+![](https://github.com/jhonyAlexan/Digital-I-GRP-9-SUBGRP-3/blob/main/Imagenes/lenguaje-Ladder.png)
 
 Diagrama de Contactos Ladder
 </div>
