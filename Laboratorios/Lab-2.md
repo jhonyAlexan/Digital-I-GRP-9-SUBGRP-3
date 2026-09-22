@@ -76,3 +76,4 @@ Diagrama de Contactos Ladder
 - En el circuito físico real de potencia, se asume un interbloqueo mecánico/eléctrico entre las fuentes para evitar cortocircuitos entre la red pública y la salida del inversor.
 
 ## 3. Simulación en Lenguaje Ladder
+https://studio.rungs.dev/9fVoBLfx 
