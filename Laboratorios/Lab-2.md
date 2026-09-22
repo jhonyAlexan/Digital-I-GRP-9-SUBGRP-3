@@ -27,3 +27,9 @@ Figura 1: Representación en caja negra del sistema de conmutación.
 
   ## 1.2 **Tabla de Verdad Criterio de diseño adoptado:** 
   Prioridad de consumo energético red eléctrica comercial. Cuando la red eléctrica comercial está disponible ($I_1 = 1$), se mantiene conectado el inversor ($Q_1 = 1$). Solo se conmuta a las baterías ($Q_1 = 0$) cuando la red eléctrica comercial presenta fallas ($I_1 = 0$) y las baterías cargadas ($I_2 = 1$).
+
+<div align="center">
+ 
+![](https://github.com/jhonyAlexan/Digital-I-GRP-9-SUBGRP-3/blob/main/Imagenes/TablaDeVerdad.png)
+
+</div>
