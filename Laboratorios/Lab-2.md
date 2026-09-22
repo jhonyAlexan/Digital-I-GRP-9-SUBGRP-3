@@ -76,4 +76,13 @@ Diagrama de Contactos Ladder
 - En el circuito físico real de potencia, se asume un interbloqueo mecánico/eléctrico entre las fuentes para evitar cortocircuitos entre la red pública y la salida del inversor.
 
 ## 3. Simulación en Lenguaje Ladder
+Se encuentra en el siguiente enlace:
 https://studio.rungs.dev/9fVoBLfx 
+
+## 4. Simulación en Tinker Cad previo al montaje
+
+Se usan las compuertas de la familia HC por tener tecnología CMOS que tienen mejor comportamiento frente al ruido.
+<div align="center">
+<img width="1627" height="802" alt="SimTKC" src="https://github.com/user-attachments/assets/346de9f2-527c-48cb-9e77-067efdeda4a7" />
+
+
