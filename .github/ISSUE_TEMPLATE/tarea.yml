@@ -1,6 +1,6 @@
-name: Tarea del proyecto Digital 2
+name: Tarea del proyecto Digital 1
 description: Crear una tarea con responsable, fechas, dependencias y evidencia
-title: "[Digital 2] "
+title: "[Digital 1] "
 body:
   - type: input
     id: team
