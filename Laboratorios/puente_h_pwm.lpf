@@ -1,0 +1,27 @@
+# --- Reloj principal de la tarjeta (25 MHz) ---
+LOCATE COMP "clk" SITE "P6";
+IOBUF PORT "clk" IO_TYPE=LVCMOS33;
+
+# --- ENTRADAS DE CONTROL (Exclusivamente en Conector J1) ---
+LOCATE COMP "fwd_n" SITE "C4";   # Conector J1 - Pin F3 (Sentido Adelante)
+LOCATE COMP "rev_n" SITE "D4";   # Conector J1 - Pin F5 (Sentido Atrás)
+LOCATE COMP "v1_n"  SITE "E4";   # Conector J1 - Pin C4 (Velocidad 1 - 40%)
+LOCATE COMP "v2_n"  SITE "D3";   # Conector J1 - Pin D4 (Velocidad 2 - 70%)
+LOCATE COMP "v3_n"  SITE "E3";   # Conector J1 - Pin G5 (Velocidad 3 - 100%)
+
+IOBUF PORT "fwd_n" IO_TYPE=LVCMOS33 PULLMODE=UP;
+IOBUF PORT "rev_n" IO_TYPE=LVCMOS33 PULLMODE=UP;
+IOBUF PORT "v1_n"  IO_TYPE=LVCMOS33 PULLMODE=UP;
+IOBUF PORT "v2_n"  IO_TYPE=LVCMOS33 PULLMODE=UP;
+IOBUF PORT "v3_n"  IO_TYPE=LVCMOS33 PULLMODE=UP;
+
+# --- SALIDAS DE CONTROL HACIA EL DRIVER L298N (Conector J2) ---
+# IMPORTANTE: Retirar el jumper físico de ENA en el módulo L298N y conectar
+# únicamente al pin ENA de señal. Compartir GND común entre FPGA, L298N y Fuente.
+LOCATE COMP "in1" SITE "F3";    # Conectar a IN1 del L298N
+LOCATE COMP "in2" SITE "F5";    # Conectar a IN2 del L298N
+LOCATE COMP "ena" SITE "G3";    # Conectar a ENA del L298N
+
+IOBUF PORT "in1" IO_TYPE=LVCMOS33;
+IOBUF PORT "in2" IO_TYPE=LVCMOS33;
+IOBUF PORT "ena" IO_TYPE=LVCMOS33;
