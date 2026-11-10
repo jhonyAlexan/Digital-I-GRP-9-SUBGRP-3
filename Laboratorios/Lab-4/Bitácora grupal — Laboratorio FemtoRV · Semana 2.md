@@ -67,7 +67,12 @@ Justificación:
 - LEDS tiene 8 bits, así que se completan con 24 ceros; BOTONES tiene 4, con 28 ceros.
 - Cada parte corresponde a una fila de la tabla 1.1: la escritura solo existe para LEDS porque BOTONES es de solo lectura.
 
-Comprobación de compilación: `iverilog -g2012 -o build/gpio_check.vvp rtl/perip_gpio.v && echo "Compila"` → \[COMPLETAR: resultado\]
+Comprobación de compilación: `iverilog -g2012 -o build/gpio_check.vvp rtl/perip_gpio.v && echo "Compila"` 
+
+La captura del resultado es la siguiente:
+
+<img width="929" height="254" alt="Tarea 2  compila" src="https://github.com/user-attachments/assets/8de9abb6-21c2-427f-9ae3-bb912ff88c9d" />
+
 
 ## Tarea 3. Probar el periférico solo
 
