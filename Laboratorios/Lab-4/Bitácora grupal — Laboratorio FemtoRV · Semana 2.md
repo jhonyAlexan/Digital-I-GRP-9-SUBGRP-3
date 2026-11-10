@@ -220,6 +220,32 @@ make syn PROG=gpio BOARD=[colorlight | tangnano9k]
 make config BOARD=...
 make terminal BOARD=...
 ```
+## Tarea 6. Implementación y validación en silicio (Colorlight 5A-75E)
+
+Se completó el flujo de síntesis e implementación física con el toolchain libre (Yosys + nextpnr-ecp5 + openFPGALoader). La tarjeta Colorlight 5A-75E operó a una frecuencia de reloj base de 25 MHz.
+
+### 6.1 Matriz de validación en hardware
+
+| Estado físico de entradas | Valor leído en C (`GPIO_BOTONES`) | Dato escrito (`GPIO_LEDS`) | Patrón binario en LEDs (`LEDS_EXT[5:0]`) | Resultado visual observado |
+|---|---|---|---|---|
+| Reposo (ambos pines en alto / pull-up) | `0x00` | `0x01` | `000001` | Solo el LED 0 encendido |
+| Pulsador 0 oprimido (E4 a GND) | `0x01` | `0x15` | `010101` | LEDs 0, 2 y 4 encendidos (patrón alterno A) |
+| Pulsador 1 oprimido (D3 a GND) | `0x02` | `0x2A` | `101010` | LEDs 1, 3 y 5 encendidos (patrón alterno B) |
+| Ambos pulsadores oprimidos simultáneamente | `0x03` | `0x3F` | `111111` | Los 6 LEDs encendidos en su totalidad |
+
+Las fotos de los casos se ven a continuaciòn:
+
+
+De esta secciòn se puede analizar lo siguiente:
+
+1. **Aislamiento arquitectónico mediante MMIO:**
+   La incorporación del periférico GPIO en la dirección base `0x0041_0000` demostró cómo la abstracción de entrada/salida mapeada en memoria permite extender las capacidades físicas del procesador sin alterar su unidad de control, decodificador de instrucciones ni el microcódigo del núcleo FemtoRV.
+
+2. **Jerarquía de decodificación de direcciones:**
+   La división en dos etapas —decodificación general en `chip_select.v` con los 16 bits superiores (`0x0041`) y decodificación interna en `perip_gpio.v` con los 5 bits inferiores (`addr[4:0]`)— minimiza la lógica combinacional y reduce el retardo de propagación crítico en el bus.
+
+3. **Adaptabilidad multiplataforma:**
+   El diseño se mantuvo agnóstico a la FPGA. Toda divergencia física (inversiones de polaridad en LEDs/botones, frecuencias de reloj de 25 MHz vs. 27 MHz y mapeo de pines) fue absorbida exclusivamente por los módulos `top` y los archivos de restricciones (`.lpf` / `.cst`), permitiendo que el módulo RTL `perip_gpio.v` y el firmware `gpio.c` compilaran y ejecutaran sin modificaciones.
 
 | `+botones=` / pulsador presionado | Comportamiento esperado de los LEDs | Observado | Evidencia |
 | --- | --- | --- | --- |
@@ -236,6 +262,12 @@ Comparación de recursos (tabla al final de `make syn`):
 | LUT | \[COMPLETAR\] | \[COMPLETAR\] |
 | BRAM | \[COMPLETAR\] | \[COMPLETAR\] |
 | Frecuencia máxima | \[COMPLETAR\] | \[COMPLETAR\] |
+
+<img width="886" height="512" alt="6makesyn" src="https://github.com/user-attachments/assets/bd0f3f81-41bb-45db-b2d6-ddc7ee38eb45" />
+
+
+<img width="893" height="340" alt="6make_config" src="https://github.com/user-attachments/assets/a2c95e9b-72b7-450e-9c4e-4ef86ace7a57" />
+
 
 ## Tarea 7. Experimento: ¿cuánto cuesta una tarea hecha por software?
 
