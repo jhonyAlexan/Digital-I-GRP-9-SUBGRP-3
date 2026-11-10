@@ -192,13 +192,24 @@ Comandos: `make sim PROG=gpio` y `make sim PROG=gpio ARGS="+botones=N +ciclos=20
 
 | `+botones=` | LEDS esperado (su patrón) | `LEDS_EXT` en la simulación | ¿Coincide? |
 | --- | --- | --- | --- |
-| 0 | `0x01` | esperado `00000001` · obtenido \[COMPLETAR\] | \[COMPLETAR\] |
-| 1 | `0x15` | esperado `00010101` · obtenido \[COMPLETAR\] | \[COMPLETAR\] |
-| 2 | `0x2A` | esperado `00101010` · obtenido \[COMPLETAR\] | \[COMPLETAR\] |
+| 0 | `0x01` | esperado `00000001` · obtenido `00000001` | SI |
+| 1 | `0x15` | esperado `00010101` · obtenido `00010101` | SI|
+| 2 | `0x2A` | esperado `00101010` · obtenido `00101010`| SI |
+
+Se adjuntas las evidencias en la terminal
+
+Caso 1: No hay pulsadores presionados
+<img width="932" height="567" alt="caso1" src="https://github.com/user-attachments/assets/9e1e60ce-60b2-4a9c-aea5-12e42759ea80" />
+Caso 2: Primer pulsador presionado
+<img width="932" height="567" alt="caso2" src="https://github.com/user-attachments/assets/92038a53-1646-4e26-b85e-9fcf7676eceb" />
+Caso 3: Segundo pulsador presionado:
+<img width="932" height="567" alt="caso3" src="https://github.com/user-attachments/assets/be2dc60a-cd53-4887-8a6e-35af1b939551" />
+
+
 
 ### 5.2 Pregunta
 
-La lectura `LEDS = 0x0000002A` la hace posible la **parte 3 (lectura)** del periférico: cuando `rd = 1` y `sel_leds = 1`, pone `{24'b0, leds}` en `d_out`, y el cambio 2 de `SOC.v` (`.chip1_dout(gpio_dout)`) lleva ese dato hasta el procesador. Si faltara cualquiera de las dos, el programa imprimiría `LEDS = 0x00000000`: en el primer caso porque `d_out` no tendría el valor, y en el segundo porque `chip_select` devolvería `32'b0`.
+La lectura `LEDS = 0x0000002A` la hace posible la **Tarea 3** en la creaciòn y configuraciòn del periférico: cuando `rd = 1` y `sel_leds = 1`, pone `{24'b0, leds}` en `d_out`, y el cambio 2 de `SOC.v` (`.chip1_dout(gpio_dout)`) lleva ese dato hasta el procesador. Si faltara cualquiera de las dos, el programa imprimiría `LEDS = 0x00000000`: en el primer caso porque `d_out` no tendría el valor, y en el segundo porque `chip_select` devolvería `32'b0`.
 
 ## Tarea 6. En la tarjeta
 
