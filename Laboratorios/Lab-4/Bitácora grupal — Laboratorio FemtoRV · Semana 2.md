@@ -118,6 +118,9 @@ gtkwave build/tb_perip_gpio.vcd &
 
 Explicación de la captura: `cs` y `wr` suben con la dirección `0x0041_0004` y el dato `0xA5` presentes; en el siguiente flanco de subida de `clk` el registro `leds` toma `0xA5`, que es la regla de escritura (`cs = 1`, `wr = 1`, dirección del registro → guardar en el flanco).
 
+<img width="925" height="312" alt="tarea3 1" src="https://github.com/user-attachments/assets/cf4c7076-31ab-4d2e-9c97-f51a9ba4dea3" />
+
+
 ## Tarea 4. Conectarlo al SoC
 
 Todos los cambios fueron en `rtl/SOC.v`; no se tocaron el procesador ni `chip_select.v`.
@@ -159,7 +162,11 @@ Explicación:
 - El `reset` se invierte porque el SoC usa `resetn` activo en bajo y el periférico usa reset activo en alto.
 - El `Makefile` incluye solo cualquier archivo `rtl/perip_*.v`, así que no hizo falta modificarlo.
 
-Comprobación: `make sim` sigue imprimiendo la salida de la semana 1 → \[COMPLETAR: confirmar\]
+Comprobación: `make sim` sigue imprimiendo la salida de la semana 1 
+
+<img width="918" height="558" alt="tarea4" src="https://github.com/user-attachments/assets/8a735411-370f-47a1-8f08-0dff9c693315" />
+
+
 
 ## Tarea 5. El programa en C
 
