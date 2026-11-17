@@ -307,7 +307,12 @@ Comandos: `make sim PROG=parpadeo ARGS="+vcd +ciclos=2000"` y `make wave`, con `
 
   <img width="1600" height="1200" alt="medicion" src="https://github.com/user-attachments/assets/c535165d-1e9e-47c0-94d8-b0cf681503c5" />
 
-- Aunos 2,3 MHz el LED se ve encendido de forma continua, así que solo se puede comprobar con instrumento, y el analizador lógico debe muestrear bastante por encima de 2,3 MHz.
+- A unos 2,3 MHz el LED se ve encendido de forma continua, así que solo se puede comprobar con instrumento, y el analizador lógico debe muestrear bastante por encima de 2,3 MHz.
+
+El montaje es el siguiente: 
+<img width="1600" height="1200" alt="implementacion" src="https://github.com/user-attachments/assets/16da2a98-4bc1-47e2-90bc-09d2d75cf36e" />
+
+
 
 ### 7.4 Conclusión
 
@@ -316,7 +321,7 @@ Comandos: `make sim PROG=parpadeo ARGS="+vcd +ciclos=2000"` y `make wave`, con `
 
 
 
-## Lo que va a la bitácora esta semana (lista de verificación)
+## Registro Bitàcora
 
 - [ ] Tarea 1: tabla de registros y caja negra.
 - [ ] Tarea 3: salida con 0 errores y captura de la escritura.
