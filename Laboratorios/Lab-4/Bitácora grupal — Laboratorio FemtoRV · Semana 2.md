@@ -296,6 +296,7 @@ Comandos: `make sim PROG=parpadeo ARGS="+vcd +ciclos=2000"` y `make wave`, con `
 - Captura:
 
 <img width="889" height="515" alt="t7makesyn" src="https://github.com/user-attachments/assets/6977b20c-3a45-447f-afd0-ee46e3c0f4aa" />
+
 - Simulación
 <img width="622" height="86" alt="image" src="https://github.com/user-attachments/assets/864f5fd6-10fc-409c-b54d-008f3ad5b55f" />
 
