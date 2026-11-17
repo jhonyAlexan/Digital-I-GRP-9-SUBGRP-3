@@ -320,7 +320,20 @@ El montaje es el siguiente:
 
 1. **¿Coinciden cálculo, simulación y medición?** \[COMPLETAR: comparar los tres valores y explicar cualquier diferencia, por ejemplo la tolerancia del reloj de la tarjeta o la resolución del instrumento.\] Si la simulación da 11 ciclos, el cálculo con la máquina de estados (3 y 4 ciclos por instrucción) queda verificado.
 2. **¿Podría el FemtoRV generar por software la señal de la pantalla de 4,3"?** No. Un dato de píxel nuevo unas 9 millones de veces por segundo exige uno cada 1/9 MHz ≈ 111 ns, que son unos 2,8 ciclos a 25 MHz. Una sola escritura (`sw`) ya cuesta 4 ciclos = 160 ns, más de lo permitido, sin contar el salto del bucle, el cálculo del siguiente píxel ni las señales de sincronismo. Incluso en el mejor caso (una escritura por píxel) el procesador queda por debajo de lo necesario. Por eso en la consola irán en **hardware**, como periférico: el generador de temporización de video (reloj de píxel, sincronismos y lectura del framebuffer), y probablemente otras tareas de flujo continuo como el PWM de audio o el barrido de un panel de LEDs. En **software** quedan las tareas lentas y de decisión: lógica del juego, menú, lectura de controles (polling) y puntajes.
+### 7.4 Conclusión
 
+1. **¿Coinciden cálculo, simulación y medición?**
+   **Sí, coinciden plenamente.** Los tres métodos convergen en el mismo resultado temporal:
+   * **Cálculo teórico:** Con el reloj base de la Colorlight 5A-75E a $25\text{ MHz}$ ($T_{\text{clk}} = 40\text{ ns}$) y un bucle de 11 ciclos (`sw` encendido = 4 ciclos, `sw` apagado = 4 ciclos, salto `j` = 3 ciclos), el periodo esperado es $T = 11 \times 40\text{ ns} = 440\text{ ns}$ y la frecuencia es $f = \frac{1}{440\text{ ns}} \approx 2{,}2727\text{ MHz}$.
+   * **Simulación (GTKWave):** Entre dos flancos de subida consecutivos de `LEDS_EXT[0]` se contaron exactamente **11 ciclos de reloj ($440\text{ ns}$)**, validando que la máquina de estados del FemtoRV32 ejecuta la secuencia de bus sin ciclos de espera adicionales[cite: 33].
+   * **Medición en tarjeta (Pin F3 / J2):** El instrumento registró una frecuencia de **$2{,}273\text{ MHz}$** y un periodo de **$440\text{ ns}$**[cite: 33]. La diferencia mínima en la cuarta cifra significativa ($2{,}273\text{ MHz}$ frente a $2{,}2727\text{ MHz}$) se debe al redondeo de pantalla del instrumento de medición y a la tolerancia nominal en partes por millón (ppm) del oscilador de cristal de la tarjeta.
+
+2. **¿Podría el FemtoRV generar por software la señal de la pantalla de 4,3"?**
+   **No.** Actualizar una pantalla de 4,3" a 9 millones de píxeles por segundo ($9\text{ MHz}$) exige entregar un dato nuevo cada $\frac{1}{9\text{ MHz}} \approx 111{,}1\text{ ns}$, lo que equivale a menos de $2{,}8$ ciclos de reloj a $25\text{ MHz}$. Como se demostró en el experimento, una sola escritura al bus (`sw`) consume 4 ciclos ($160\text{ ns}$) y el bucle mínimo de conmutación tarda 11 ciclos ($440\text{ ns}$ — es decir, apenas $2{,}27\text{ MHz}$, casi cuatro veces más lento de lo requerido), sin contar el cálculo de coordenadas ni la generación de sincronismos.
+
+   Por esta restricción de ancho de banda del procesador secuencial, la arquitectura de la consola debe dividirse así:
+   * **En hardware (periféricos dedicados):** El controlador de video (generador de reloj de píxel, señales de sincronismo horizontal/vertical y lectura directa del *framebuffer*), la generación de audio continuo (PWM o I2S) y las interfaces de comunicación serial de alta velocidad (SPI/I2C)[cite: 34].
+   * **En software (código C en el FemtoRV):** Las tareas de control, lógica de juego, máquinas de estado de menús, actualización de puntajes y lectura periódica (*polling*) de los pulsadores del usuario.
 
 
 ## Registro Bitàcora
