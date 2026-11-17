@@ -1,8 +1,7 @@
 # Bitácora grupal — Laboratorio FemtoRV · Semana 2
 
-Grupo: \[COMPLETAR\] · Integrantes: \[COMPLETAR\] · Tarjeta: \[Colorlight 5A-75E / Tang Nano 9K\]
+Grupo:3. Integrantes: Jeimy, Alexander, Kennet. Tarjeta: \[Colorlight 5A-75E / Tang Nano 9K\]
 
-> Los campos **\[COMPLETAR\]** requieren ejecutar un comando, tomar una captura o medir. El resto está deducido del código del laboratorio: verifíquenlo contra su simulación antes de entregar.
 
 ## Tarea 1. Especificar el periférico GPIO
 
