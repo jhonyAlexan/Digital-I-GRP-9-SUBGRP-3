@@ -294,30 +294,28 @@ Los `sw` recorren buscar → esperar → ejecutar → esperar memoria (4 ciclos)
 Comandos: `make sim PROG=parpadeo ARGS="+vcd +ciclos=2000"` y `make wave`, con `clk` y `LEDS_EXT[0]`.
 
 - Ciclos contados entre dos flancos de subida consecutivos de `LEDS_EXT[0]`: \[COMPLETAR\] (esperado: 11, es decir 440 ns).
-- Captura con los cursores: \[COMPLETAR: imagen\]
+- Captura:
+
+<img width="889" height="515" alt="t7makesyn" src="https://github.com/user-attachments/assets/6977b20c-3a45-447f-afd0-ee46e3c0f4aa" />
+
+
+
 
 ### 7.3 Medición en la tarjeta
 
 - Instrumento usado: \[osciloscopio / analizador lógico\]. Se mide en el pin del LED 0 (J2 en la Colorlight; ver `Tarjetas.md`, opción A, para la Tang Nano).
-- Frecuencia medida: \[COMPLETAR\] · Periodo medido: \[COMPLETAR\]
-- Captura: \[COMPLETAR: imagen\]
-- Aviso práctico: a unos 2,3 MHz el LED se ve encendido de forma continua, así que solo se puede comprobar con instrumento, y el analizador lógico debe muestrear bastante por encima de 2,3 MHz.
+- Frecuencia medida: 2,273 MHz. Perìodo medido: 440 ns.
+
+  <img width="1600" height="1200" alt="medicion" src="https://github.com/user-attachments/assets/c535165d-1e9e-47c0-94d8-b0cf681503c5" />
+
+- Aunos 2,3 MHz el LED se ve encendido de forma continua, así que solo se puede comprobar con instrumento, y el analizador lógico debe muestrear bastante por encima de 2,3 MHz.
 
 ### 7.4 Conclusión
 
 1. **¿Coinciden cálculo, simulación y medición?** \[COMPLETAR: comparar los tres valores y explicar cualquier diferencia, por ejemplo la tolerancia del reloj de la tarjeta o la resolución del instrumento.\] Si la simulación da 11 ciclos, el cálculo con la máquina de estados (3 y 4 ciclos por instrucción) queda verificado.
 2. **¿Podría el FemtoRV generar por software la señal de la pantalla de 4,3"?** No. Un dato de píxel nuevo unas 9 millones de veces por segundo exige uno cada 1/9 MHz ≈ 111 ns, que son unos 2,8 ciclos a 25 MHz. Una sola escritura (`sw`) ya cuesta 4 ciclos = 160 ns, más de lo permitido, sin contar el salto del bucle, el cálculo del siguiente píxel ni las señales de sincronismo. Incluso en el mejor caso (una escritura por píxel) el procesador queda por debajo de lo necesario. Por eso en la consola irán en **hardware**, como periférico: el generador de temporización de video (reloj de píxel, sincronismos y lectura del framebuffer), y probablemente otras tareas de flujo continuo como el PWM de audio o el barrido de un panel de LEDs. En **software** quedan las tareas lentas y de decisión: lógica del juego, menú, lectura de controles (polling) y puntajes.
 
-## Valor agregado (opcional): periférico del laboratorio anterior
 
-Si su controlador del laboratorio de periféricos fue el puente H con PWM, una propuesta de tabla de registros en `0x0043_0000` (`cs[3]`) sería:
-
-| Dirección | Nombre | Acceso | Bits | Significado |
-| --- | --- | --- | --- | --- |
-| `0x0043_0004` | CONTROL | L/E | bit 0, bit 1 | bit 0 = habilitar, bit 1 = sentido de giro |
-| `0x0043_0008` | DUTY | L/E | \[N-1:0\] | Ciclo útil del PWM (N según el ancho del contador de su diseño) |
-
-Pasos: conectar `cs_chip3` y un `chip3_dout` en `SOC.v`, agregar el puerto del pin del motor en el top y el archivo de pines, probarlo con un testbench de bus (una prueba por fila) y controlarlo desde C con `#define` análogos a los del GPIO. Ajusten los registros a lo que realmente ofrece su diseño.
 
 ## Lo que va a la bitácora esta semana (lista de verificación)
 
